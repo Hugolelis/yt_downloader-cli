@@ -1,1 +1,8 @@
-ideas.txt
+annotations.txt
+.venv
+yt_downloader.egg-info
+
+__pycache__/
+*.pyc
+
+downloads

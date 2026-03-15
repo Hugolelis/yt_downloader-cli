@@ -1,0 +1,17 @@
+[project]
+name = "yt-downloader"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "yt-dlp",
+    "typer",
+    "rich",
+    "validators",
+]
+
+[project.scripts]
+yt = "src.main:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+namespaces = true
