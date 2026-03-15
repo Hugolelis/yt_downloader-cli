@@ -9,7 +9,7 @@
 
 # 🎬 YT Downloader
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-em%20desenvolvimento-orange?style=flat-square)]()
+[![Status](https://img.shields.io/badge/Status-complete-green?style=flat-square)]()
 [![Version](https://img.shields.io/badge/version-0.1.0-blue?style=flat-square)]()
 
 A command-line tool to download YouTube videos and audio directly from your terminal. Built with Python, focused on simplicity and flexibility.
