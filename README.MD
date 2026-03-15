@@ -73,10 +73,7 @@ yt download <url>
 yt download <url> --audio
 
 # Choose quality
-yt download <url> --quality 1080
-
-# List available formats
-yt list-formats <url>
+yt download <url> --quality <quality>
 ```
 
 ---
