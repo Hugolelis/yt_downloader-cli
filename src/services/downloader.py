@@ -1,6 +1,6 @@
 import yt_dlp
 
-from src.cli.helpers.errors import DownloaderError
+from src.helpers.errors import DownloaderError
 
 class Downloader:
     def __init__(self, url: str) -> None:

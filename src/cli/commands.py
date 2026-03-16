@@ -1,6 +1,6 @@
 import typer
-from src.cli.services.downloader import Downloader
-from src.cli.helpers.errors import DownloaderError
+from src.services.downloader import Downloader
+from src.helpers.errors import DownloaderError
 
 app = typer.Typer()
 
