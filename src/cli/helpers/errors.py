@@ -1,4 +1,5 @@
 from typing import Never
+import os
 import validators
 
 class DownloaderError(Exception):
@@ -21,4 +22,9 @@ class DownloaderError(Exception):
     def invalid_quality(quality: int) -> None:
         if quality not in [720, 1080, 1440]:
             raise DownloaderError("Qualidade inválida. Use: 720, 1080 ou 1440.")
+
+    @staticmethod
+    def file_already_exists(name: str) -> Never:
+        if os.path.exists(name):
+            raise DownloaderError("O arquivo já foi baixado anteriormente.")
         

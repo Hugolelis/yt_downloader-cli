@@ -17,7 +17,7 @@ class Downloader:
     def video(self, quality:  int = 720):
         DownloaderError.invalid_quality(quality)
 
-        format_save = f"best[height<={quality}][ext=mp4]/best[ext=mp4]/best"
+        format_save = f"bestvideo[height<={quality}][vcodec^=avc1]+bestaudio[ext=m4a]/bestvideo[height<={quality}]+bestaudio/best"
 
         options = {
             "format": format_save,
@@ -27,7 +27,12 @@ class Downloader:
 
         try:
             with yt_dlp.YoutubeDL(options) as ydl:
+                info = ydl.extract_info(self.url, download=False)
+                title = info.get("title", "")
+                DownloaderError.file_already_exists(f"{self.videos_path}{title}.mp4")
                 ydl.download([self.url])
+        except DownloaderError:
+            raise
         except Exception:
             DownloaderError.download_failed()
 
@@ -48,6 +53,11 @@ class Downloader:
 
         try:
             with yt_dlp.YoutubeDL(options) as ydl:
+                info = ydl.extract_info(self.url, download=False)
+                title = info.get("title", "")
+                DownloaderError.file_already_exists(f"{self.audios_path}{title}.mp3")
                 ydl.download([self.url])
+        except DownloaderError:
+            raise
         except Exception:
             DownloaderError.download_failed()
