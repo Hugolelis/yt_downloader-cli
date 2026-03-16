@@ -36,6 +36,9 @@ A command-line tool to download YouTube videos and audio directly from your term
 
 ```text
 yt-downloader/
+├── downloads/
+│   ├── videos/               # Downloaded videos
+│   └── audios/               # Downloaded audios
 ├── src/
 │   ├── cli/
 │   │   └── commands.py       # CLI commands and argument definitions
