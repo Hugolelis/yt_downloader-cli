@@ -19,7 +19,6 @@ A command-line tool to download YouTube videos and audio directly from your term
 * **Video Download** — Download videos in the best available quality.
 * **Audio Download** — Extract audio and save as MP3.
 * **Quality Selection** — Choose your preferred resolution (e.g. 720p, 1080p).
-* **List Formats** — Preview all available formats before downloading.
 
 ---
 
