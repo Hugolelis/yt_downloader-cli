@@ -41,6 +41,8 @@ yt-downloader/
 ├── src/
 │   ├── cli/
 │   │   └── commands.py       # CLI commands and argument definitions
+│   ├── helpers/
+│   │   └── errors.py         # Custom error handling
 │   ├── services/
 │   │   └── downloader.py     # Core download logic
 │   └── main.py               # Entrypoint
