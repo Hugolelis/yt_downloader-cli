@@ -10,9 +10,9 @@ class Downloader:
         self.videos_path = "downloads/videos/"
         self.audios_path = "downloads/audios/"
 
-    ############################################################################
-    # Baixa o vídeo em formato MP4 com a qualidade especificada (padrão: 720p).#
-    ############################################################################
+    ###############################################################################
+    # Download the video in MP4 format with the specified quality (default: 720p).#
+    ###############################################################################
     
     def video(self, quality:  int = 720):
         DownloaderError.invalid_quality(quality)
@@ -36,9 +36,9 @@ class Downloader:
         except Exception:
             DownloaderError.download_failed()
 
-    ##########################################################
-    # Extrai e baixa o áudio em MP3 com qualidade de 192kbps.#
-    ##########################################################
+    #######################################################
+    # Extracts and downloads MP3 audio at 192kbps quality.#
+    #######################################################
 
     def audio(self) -> None:
         options = {
