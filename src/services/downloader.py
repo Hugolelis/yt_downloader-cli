@@ -10,10 +10,15 @@ class Downloader:
         self.videos_path = "downloads/videos/"
         self.audios_path = "downloads/audios/"
 
-    ###############################################################################
-    # Download the video in MP4 format with the specified quality (default: 720p).#
-    ###############################################################################
-    
+    ########################################################
+    # Initializes the Downloader with a YouTube URL.       #
+    ########################################################
+    #                                                      #
+    # @param url: The YouTube video URL to download from.  #
+    #                                                      #
+    # @raises DownloaderError: If the URL is invalid.      #
+    #                                                      #
+    ########################################################
     def video(self, quality:  int = 720):
         DownloaderError.invalid_quality(quality)
 
@@ -36,10 +41,17 @@ class Downloader:
         except Exception:
             DownloaderError.download_failed()
 
-    #######################################################
-    # Extracts and downloads MP3 audio at 192kbps quality.#
-    #######################################################
-
+    #################################################################
+    # Downloads the video in MP4 format with the specified quality. #
+    #################################################################
+    #                                                               #
+    # @param quality: Max resolution height in pixels.              #
+    #                 Defaults to 720.                              #
+    #                                                               #
+    # @raises DownloaderError: If quality is invalid, file already  #
+    #                          exists, or download fails.           #
+    #                                                               #
+    #################################################################
     def audio(self) -> None:
         options = {
             "format": "bestaudio/best",
