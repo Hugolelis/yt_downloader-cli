@@ -1,79 +1,74 @@
-```
- ██╗   ██╗████████╗    ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗ ███████╗██████╗ 
- ╚██╗ ██╔╝╚══██╔══╝    ██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██╔═══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
-  ╚████╔╝    ██║       ██║  ██║██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║███████║██║  ██║█████╗  ██████╔╝
-   ╚██╔╝     ██║       ██║  ██║██║   ██║██║███╗██║██║╚██╗██║██║     ██║   ██║██╔══██║██║  ██║██╔══╝  ██╔══██╗
-    ██║      ██║       ██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║███████╗╚██████╔╝██║  ██║██████╔╝███████╗██║  ██║
-    ╚═╝      ╚═╝       ╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
-```
+# YT Downloader
 
-# 🎬 YT Downloader
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-complete-green?style=flat-square)]()
-[![Version](https://img.shields.io/badge/version-0.1.0-blue?style=flat-square)]()
+<div align="left">
+
+[![License](https://img.shields.io/badge/License-MIT-1a1a2e?style=for-the-badge&logoColor=white)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Complete-1a1a2e?style=for-the-badge&logoColor=white)]()
+[![Version](https://img.shields.io/badge/Version-0.1.0-1a1a2e?style=for-the-badge&logoColor=white)]()
+
+</div>
 
 A command-line tool to download YouTube videos and audio directly from your terminal. Built with Python, focused on simplicity and flexibility.
 
-## ✨ Features
+---
 
-* **Video Download** — Download videos in the best available quality.
-* **Audio Download** — Extract audio and save as MP3.
-* **Quality Selection** — Choose your preferred resolution (e.g. 720p, 1080p).
+## Features
+
+- **Video Download** — Download videos in the best available quality.
+- **Audio Download** — Extract audio and save as MP3.
+- **Quality Selection** — Choose your preferred resolution (e.g. 720p, 1080p).
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-* **Language:** [Python 3.11+](https://www.python.org/)
-* **Downloader:** [yt-dlp](https://github.com/yt-dlp/yt-dlp) — robust YouTube download engine
-* **CLI:** [Typer](https://typer.tiangolo.com/) — modern CLI framework based on type hints
-* **Terminal UI:** [Rich](https://rich.readthedocs.io/) — beautiful terminal output with progress bars
+![Python](https://img.shields.io/badge/Python-1a1a2e?style=for-the-badge&logo=python&logoColor=white)
+![yt-dlp](https://img.shields.io/badge/yt--dlp-1a1a2e?style=for-the-badge&logo=youtube&logoColor=white)
+![Typer](https://img.shields.io/badge/Typer-1a1a2e?style=for-the-badge&logo=fastapi&logoColor=white)
+![Rich](https://img.shields.io/badge/Rich-1a1a2e?style=for-the-badge&logo=python&logoColor=white)
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 yt-downloader/
 ├── downloads/
-│   ├── videos/               # Downloaded videos
-│   └── audios/               # Downloaded audios
+│   ├── videos/
+│   └── audios/
 ├── src/
 │   ├── cli/
-│   │   └── commands.py       # CLI commands and argument definitions
+│   │   └── commands.py
 │   ├── helpers/
-│   │   └── errors.py         # Custom error handling
+│   │   └── errors.py
 │   ├── services/
-│   │   └── downloader.py     # Core download logic
-│   └── main.py               # Entrypoint
-├── pyproject.toml            # Project manifest and dependencies
+│   │   └── downloader.py
+│   └── main.py
+├── pyproject.toml
 └── README.md
 ```
 
 ---
 
-## ⚙️ Running
+## Running
 
-#### 1. Clone the Repository
-
+**1. Clone the repository**
 ```bash
 git clone https://github.com/Hugolelis/yt-downloader.git
 cd yt-downloader
 ```
 
-#### 2. Install Dependencies
-
+**2. Install dependencies**
 ```bash
 pip install -e .
 ```
 
-#### 3. Run
-
+**3. Run**
 ```bash
 # Download video
 yt download <url>
 
-# Download audio only (mp3)
+# Download audio only
 yt download <url> --audio
 
 # Choose quality
@@ -82,6 +77,6 @@ yt download <url> --quality <quality>
 
 ---
 
-## 📄 License
+## License
 
-This project is licensed under the **MIT** License. See the [LICENSE](LICENSE) file for details.
+Licensed under the **MIT** License. See [LICENSE](LICENSE) for details.
