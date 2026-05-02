@@ -66,13 +66,13 @@ pip install -e .
 **3. Run**
 ```bash
 # Download video
-yt download <url>
+yt <url>
 
 # Download audio only
-yt download <url> --audio
+yt <url> --audio
 
 # Choose quality
-yt download <url> --quality <quality>
+yt <url> --quality <quality>
 ```
 
 ---
