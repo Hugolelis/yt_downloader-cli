@@ -53,17 +53,20 @@ yt-downloader/
 ## Running
 
 **1. Clone the repository**
+
 ```bash
 git clone https://github.com/Hugolelis/yt-downloader.git
 cd yt-downloader
 ```
 
 **2. Install dependencies**
+
 ```bash
 pip install -e .
 ```
 
 **3. Run**
+
 ```bash
 # Download video
 yt <url>
