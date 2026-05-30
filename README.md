@@ -168,9 +168,3 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 ## License
 
 Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
-
----
-
-<p align="center">
-  Made with ❤️ by <a href="https://github.com/Hugolelis">Hugolelis</a>
-</p>
