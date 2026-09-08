@@ -1,31 +1,112 @@
 # YT Downloader CLI
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-%3E%3D3.11-1a1a2e?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/Version-0.1.0-1a1a2e?style=for-the-badge&logoColor=white" alt="Version">
-  <img src="https://img.shields.io/badge/License-MIT-1a1a2e?style=for-the-badge&logoColor=white" alt="License">
-  <img src="https://img.shields.io/badge/Status-Active-1a1a2e?style=for-the-badge&logoColor=white" alt="Status">
-</p>
+<div align="left">
 
-<p align="center">
-  A fast and simple command-line tool to download YouTube videos and audio.<br>
-  Built with Python, powered by <strong>yt-dlp</strong>, wrapped in a clean <strong>Typer</strong> CLI.
-</p>
+[![License](https://img.shields.io/badge/License-MIT-1a1a2e?style=for-the-badge&logoColor=white)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-%3E%3D3.11-1a1a2e?style=for-the-badge&logo=python&logoColor=white)]()
+[![Version](https://img.shields.io/badge/Version-0.1.0-1a1a2e?style=for-the-badge&logoColor=white)]()
+[![Status](https://img.shields.io/badge/Status-Active-1a1a2e?style=for-the-badge&logoColor=white)]()
+
+</div>
+
+> **YT Downloader CLI** is a fast, single-purpose command-line tool to download YouTube videos and audio, built on top of `yt-dlp` and wrapped in a clean Typer CLI.
+
+<details>
+<summary><strong>Table of Contents</strong></summary>
+
+- [About](#about)
+- [Demo](#demo)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture & Design Decisions](#architecture--design-decisions)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Commands](#commands)
+- [Output Structure](#output-structure)
+- [License](#license)
+- [Author](#author)
+
+</details>
+
+---
+
+## About
+
+`yt-dlp` already does the heavy lifting for YouTube downloads, but its CLI surface is built for every option under the sun. This wraps just the two things actually needed day to day — grab a video at a given quality, or pull the audio as MP3 — behind a small Typer CLI with duplicate protection and clean colored output, instead of remembering `yt-dlp` flags every time.
+
+<!-- Adjust to your actual motivation — draft based on the feature list. -->
+
+---
+
+## Demo
+
+```bash
+yt https://youtube.com/watch?v=example
+```
+
+<!-- Replace with a real captured terminal output or GIF (Rich-styled progress/success message) — strengthens this section a lot more than a bare command. -->
 
 ---
 
 ## Features
 
-- **Video Download** — Download YouTube videos in MP4 format with selectable quality (720p, 1080p, 1440p).
-- **Audio Extraction** — Extract and convert audio to MP3 at 192 kbps via FFmpeg.
-- **Duplicate Protection** — Skips downloads if the file already exists.
-- **URL Validation** — Validates URLs before attempting to download.
-- **Clean Output** — Colored terminal feedback powered by Rich.
-- **Lightweight** — Minimal dependencies, focused on one job.
+| Capability | Description |
+|---|---|
+| **Video Download** | Download YouTube videos in MP4 format with selectable quality (720p, 1080p, 1440p) |
+| **Audio Extraction** | Extract and convert audio to MP3 at 192 kbps via FFmpeg |
+| **Duplicate Protection** | Skips downloads if the file already exists |
+| **URL Validation** | Validates URLs before attempting to download |
+| **Clean Output** | Colored terminal feedback powered by Rich |
+| **Lightweight** | Minimal dependencies, focused on one job |
 
 ---
 
-## Prerequisites
+## Tech Stack
+
+| Tool | Purpose |
+|---|---|
+| [Python](https://python.org) >= 3.11 | Core language |
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | YouTube download engine |
+| [Typer](https://typer.tiangolo.com) | CLI interface builder |
+| [Rich](https://rich.readthedocs.io) | Terminal styling and output |
+| [validators](https://validators.readthedocs.io) | URL validation |
+| [FFmpeg](https://ffmpeg.org) | Audio transcoding (MP3) |
+
+---
+
+## Architecture & Design Decisions
+
+```
+yt-downloader/
+├── src/
+│   ├── cli/
+│   │   └── commands.py      # Typer CLI commands
+│   ├── helpers/
+│   │   └── errors.py        # Custom exceptions and validation
+│   ├── services/
+│   │   └── downloader.py    # Core download logic (yt-dlp)
+│   └── main.py              # Application entry point
+├── downloads/
+│   ├── videos/
+│   └── audios/
+├── pyproject.toml           # Project metadata & dependencies
+└── README.md
+```
+
+**Why this shape:** `downloader.py` isolates all `yt-dlp` calls behind one service, so the CLI layer only deals with user input/output, not download internals. Typer was chosen for type-hint-driven commands and automatic `--help`; Rich keeps terminal styling out of the download logic entirely.
+
+**Known limitations:**
+- No playlist support — one URL per invocation.
+- No resume for interrupted downloads; a partial file is treated as incomplete and re-downloaded.
+- Quality selection (`720`/`1080`/`1440`) depends on what YouTube actually offers for a given video — no fallback message if the requested quality isn't available.
+
+<!-- Adjust "Why this shape" and "Known limitations" to match your actual reasoning — draft based on the code structure. -->
+
+---
+
+## Getting Started
+
+### Prerequisites
 
 - **Python** >= 3.11
 - **FFmpeg** installed and available on your PATH (required for audio extraction)
@@ -41,16 +122,11 @@
   choco install ffmpeg
   ```
 
----
-
-## Installation
+### Installation
 
 ```bash
-# Clone the repository
 git clone https://github.com/Hugolelis/YT-Downloader-CLI.git
 cd YT-Downloader-CLI
-
-# Install the package (editable mode)
 pip install -e .
 ```
 
@@ -88,7 +164,7 @@ yt version
 
 ---
 
-## Command Reference
+## Commands
 
 | Command | Description |
 |---|---|
@@ -119,52 +195,12 @@ Files are named after the YouTube video title.
 
 ---
 
-## Project Structure
-
-```
-yt-downloader/
-├── src/
-│   ├── cli/
-│   │   └── commands.py      # Typer CLI commands
-│   ├── helpers/
-│   │   └── errors.py        # Custom exceptions and validation
-│   ├── services/
-│   │   └── downloader.py    # Core download logic (yt-dlp)
-│   └── main.py              # Application entry point
-├── downloads/
-│   ├── videos/
-│   └── audios/
-├── pyproject.toml           # Project metadata & dependencies
-└── README.md
-```
-
----
-
-## Tech Stack
-
-| Tool | Purpose |
-|---|---|
-| [Python](https://python.org) >= 3.11 | Core language |
-| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | YouTube download engine |
-| [Typer](https://typer.tiangolo.com) | CLI interface builder |
-| [Rich](https://rich.readthedocs.io) | Terminal styling and output |
-| [validators](https://validators.readthedocs.io) | URL validation |
-| [FFmpeg](https://ffmpeg.org) | Audio transcoding (MP3) |
-
----
-
-## Contributing
-
-Contributions are welcome! Feel free to open an issue or submit a pull request.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
 ## License
 
 Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
+
+---
+
+## Author
+
+**Hugo** — [GitHub](https://github.com/Hugolelis)
