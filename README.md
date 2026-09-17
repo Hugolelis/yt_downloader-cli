@@ -127,6 +127,8 @@ yt-downloader/
 ```bash
 git clone https://github.com/Hugolelis/YT-Downloader-CLI.git
 cd YT-Downloader-CLI
+python -m venv .venv
+source .venv/bin/activate
 pip install -e .
 ```
 
