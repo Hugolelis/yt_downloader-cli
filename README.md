@@ -32,9 +32,9 @@
 
 ## About
 
-`yt-dlp` already does the heavy lifting for YouTube downloads, but its CLI surface is built for every option under the sun. This wraps just the two things actually needed day to day — grab a video at a given quality, or pull the audio as MP3 — behind a small Typer CLI with duplicate protection and clean colored output, instead of remembering `yt-dlp` flags every time.
+`yt-dlp` already does the heavy lifting for YouTube downloads, but its CLI surface is built for every option under the sun. This wraps just the two things actually needed day to day (grab a video at a given quality, or pull the audio as MP3) behind a small Typer CLI with duplicate protection and clean colored output, instead of remembering `yt-dlp` flags every time.
 
-<!-- Adjust to your actual motivation — draft based on the feature list. -->
+<!-- Adjust to your actual motivation, draft based on the feature list. -->
 
 ---
 
@@ -44,7 +44,7 @@
 yt https://youtube.com/watch?v=example
 ```
 
-<!-- Replace with a real captured terminal output or GIF (Rich-styled progress/success message) — strengthens this section a lot more than a bare command. -->
+<!-- Replace with a real captured terminal output or GIF (Rich-styled progress/success message), which strengthens this section a lot more than a bare command. -->
 
 ---
 
@@ -96,11 +96,11 @@ yt-downloader/
 **Why this shape:** `downloader.py` isolates all `yt-dlp` calls behind one service, so the CLI layer only deals with user input/output, not download internals. Typer was chosen for type-hint-driven commands and automatic `--help`; Rich keeps terminal styling out of the download logic entirely.
 
 **Known limitations:**
-- No playlist support — one URL per invocation.
+- No playlist support: one URL per invocation.
 - No resume for interrupted downloads; a partial file is treated as incomplete and re-downloaded.
-- Quality selection (`720`/`1080`/`1440`) depends on what YouTube actually offers for a given video — no fallback message if the requested quality isn't available.
+- Quality selection (`720`/`1080`/`1440`) depends on what YouTube actually offers for a given video, with no fallback message if the requested quality isn't available.
 
-<!-- Adjust "Why this shape" and "Known limitations" to match your actual reasoning — draft based on the code structure. -->
+<!-- Adjust "Why this shape" and "Known limitations" to match your actual reasoning, draft based on the code structure. -->
 
 ---
 
@@ -205,4 +205,4 @@ Distributed under the **MIT License**. See [LICENSE](LICENSE) for more informati
 
 ## Author
 
-**Hugo** — [GitHub](https://github.com/Hugolelis)
+[Hugolelis](https://github.com/Hugolelis)
