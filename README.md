@@ -22,8 +22,8 @@
 - [Usage](#usage)
 - [Commands](#commands)
 - [Output Structure](#output-structure)
-- [License](#license)
 - [Author](#author)
+- [License](#license)
 
 </details>
 
@@ -196,12 +196,12 @@ Files are named after the YouTube video title.
 
 ---
 
-## License
-
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
-
----
-
 ## Author
 
 [Hugolelis](https://github.com/Hugolelis)
+
+---
+
+## License
+
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
