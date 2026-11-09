@@ -33,17 +33,32 @@
 
 `yt-dlp` already does the heavy lifting for YouTube downloads, but its CLI surface is built for every option under the sun. This wraps just the two things actually needed day to day (grab a video at a given quality, or pull the audio as MP3) behind a small Typer CLI with duplicate protection and clean colored output, instead of remembering `yt-dlp` flags every time.
 
-<!-- Adjust to your actual motivation, draft based on the feature list. -->
-
 ---
 
 ## Demo
 
 ```bash
-yt https://youtube.com/watch?v=example
+yt download https://www.youtube.com/watch?v=<video-id> --quality 1080
 ```
 
-<!-- Replace with a real captured terminal output or GIF (Rich-styled progress/success message), which strengthens this section a lot more than a bare command. -->
+The command shows a panel with the URL, downloads through `yt-dlp` and ends with a green confirmation (messages are in Portuguese). The full set of options is always one flag away:
+
+```
+$ yt download --help
+
+ Usage: yt download [OPTIONS] {url}
+
+ Download vídeo or audio in YouTube.
+
+╭─ Arguments ──────────────────────────────────────────────────────────────────╮
+│ *    url      <str>  URL do vídeo do YouTube [required]                      │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭─ Options ────────────────────────────────────────────────────────────────────╮
+│ --audio    -a      <bool>  Baixar apenas o áudio                             │
+│ --quality  -q      <int>   Qualidade do vídeo (ex: 720, 1080) [default: 720] │
+│ --help             <bool>  Show this message and exit.                       │
+╰──────────────────────────────────────────────────────────────────────────────╯
+```
 
 ---
 
@@ -51,11 +66,11 @@ yt https://youtube.com/watch?v=example
 
 | Capability | Description |
 |---|---|
-| **Video Download** | Download YouTube videos in MP4 format with selectable quality (720p, 1080p, 1440p) |
+| **Video Download** | Download YouTube videos as MP4 with a selectable maximum quality (720p, 1080p, 1440p). Prefers H.264 video with AAC audio for wide player compatibility |
 | **Audio Extraction** | Extract and convert audio to MP3 at 192 kbps via FFmpeg |
-| **Duplicate Protection** | Skips downloads if the file already exists |
-| **URL Validation** | Validates URLs before attempting to download |
-| **Clean Output** | Colored terminal feedback powered by Rich |
+| **Duplicate Protection** | Stops with an error instead of downloading again when the file already exists |
+| **URL Validation** | Validates the URL before attempting to download |
+| **Clean Output** | Colored terminal feedback powered by Rich, and a non-zero exit code on errors |
 | **Lightweight** | Minimal dependencies, focused on one job |
 
 ---
@@ -69,37 +84,38 @@ yt https://youtube.com/watch?v=example
 | [Typer](https://typer.tiangolo.com) | CLI interface builder |
 | [Rich](https://rich.readthedocs.io) | Terminal styling and output |
 | [validators](https://validators.readthedocs.io) | URL validation |
-| [FFmpeg](https://ffmpeg.org) | Audio transcoding (MP3) |
+| [FFmpeg](https://ffmpeg.org) | Merging video and audio streams, and MP3 transcoding |
 
 ---
 
 ## Architecture & Design Decisions
 
 ```
-yt-downloader/
+.
 ├── src/
 │   ├── cli/
-│   │   └── commands.py      # Typer CLI commands
+│   │   └── commands.py      # Typer commands (download, version)
 │   ├── helpers/
-│   │   └── errors.py        # Custom exceptions and validation
+│   │   └── errors.py        # DownloaderError and input checks (URL, quality, duplicates)
 │   ├── services/
 │   │   └── downloader.py    # Core download logic (yt-dlp)
 │   └── main.py              # Application entry point
-├── downloads/
-│   ├── videos/
-│   └── audios/
-├── pyproject.toml           # Project metadata & dependencies
+├── pyproject.toml           # Project metadata, dependencies and the `yt` script
+├── LICENSE
 └── README.md
 ```
 
-**Why this shape:** `downloader.py` isolates all `yt-dlp` calls behind one service, so the CLI layer only deals with user input/output, not download internals. Typer was chosen for type-hint-driven commands and automatic `--help`; Rich keeps terminal styling out of the download logic entirely.
+At runtime the tool creates `downloads/videos/` and `downloads/audios/` in the folder you run it from (git-ignored here).
+
+**Why this shape:** `downloader.py` isolates all `yt-dlp` calls behind one service, so the CLI layer only deals with user input/output, not download internals. Every expected failure is raised as a `DownloaderError`, so the CLI catches one exception type, prints a clean message and exits with code 1. Typer was chosen for type-hint-driven commands and automatic `--help`; Rich keeps terminal styling out of the download logic entirely.
 
 **Known limitations:**
 - No playlist support: one URL per invocation.
-- No resume for interrupted downloads; a partial file is treated as incomplete and re-downloaded.
-- Quality selection (`720`/`1080`/`1440`) depends on what YouTube actually offers for a given video, with no fallback message if the requested quality isn't available.
-
-<!-- Adjust "Why this shape" and "Known limitations" to match your actual reasoning, draft based on the code structure. -->
+- Quality is a maximum (`height <= quality`), so if YouTube does not offer the requested resolution the best one below it is downloaded, with no message saying so.
+- The duplicate check looks for `<video title>.mp4` / `.mp3`, but `yt-dlp` replaces characters that are invalid in file names, so a title with such characters may not be recognized as already downloaded.
+- Only 720, 1080 and 1440 are accepted as quality values.
+- User-facing messages are in Portuguese.
+- No automated tests yet.
 
 ---
 
@@ -108,7 +124,7 @@ yt-downloader/
 ### Prerequisites
 
 - **Python** >= 3.11
-- **FFmpeg** installed and available on your PATH (required for audio extraction)
+- **FFmpeg** installed and available on your PATH (required to merge video and audio into MP4, and to extract MP3)
 
   ```bash
   # Debian / Ubuntu
@@ -124,37 +140,39 @@ yt-downloader/
 ### Installation
 
 ```bash
-git clone https://github.com/Hugolelis/YT-Downloader-CLI.git
-cd YT-Downloader-CLI
+git clone https://github.com/Hugolelis/yt_downloader-cli.git
+cd yt_downloader-cli
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .
 ```
 
-> **Note:** This registers the `yt` command globally in your environment.
+> **Note:** This registers the `yt` command inside the virtual environment, so activate it (`source .venv/bin/activate`) before using it in a new terminal.
 
 ---
 
 ## Usage
 
+The download is the `download` command, so the URL always comes after it.
+
 ### Download a video (defaults to 720p)
 
 ```bash
-yt <youtube-url>
+yt download <youtube-url>
 ```
 
 ### Download at a specific quality
 
 ```bash
-yt <youtube-url> --quality 1080
-yt <youtube-url> -q 1440
+yt download <youtube-url> --quality 1080
+yt download <youtube-url> -q 1440
 ```
 
 ### Download audio only (MP3)
 
 ```bash
-yt <youtube-url> --audio
-yt <youtube-url> -a
+yt download <youtube-url> --audio
+yt download <youtube-url> -a
 ```
 
 ### Check the version
@@ -169,27 +187,28 @@ yt version
 
 | Command | Description |
 |---|---|
-| `yt <url>` | Download video at 720p (default) |
-| `yt <url> -q <quality>` | Download video at specified quality (720, 1080, 1440) |
-| `yt <url> -a` | Download audio only as MP3 |
+| `yt download <url>` | Download video at 720p (default) |
+| `yt download <url> -q <quality>` | Download video at the given maximum quality (720, 1080, 1440) |
+| `yt download <url> -a` | Download audio only as MP3 |
 | `yt version` | Show the installed version |
 
-### Options
+### Options (`yt download`)
 
 | Flag | Shorthand | Description | Default |
 |---|---|---|---|
-| `--quality` | `-q` | Video quality (720, 1080, 1440) | `720` |
-| `--audio` | `-a` | Download audio only | `false` |
+| `--quality` | `-q` | Maximum video height: 720, 1080 or 1440 | `720` |
+| `--audio` | `-a` | Download audio only (the quality is ignored) | `false` |
 
 ---
 
 ## Output Structure
 
+Files go to a `downloads/` folder inside the directory where you run the command:
+
 ```
-yt-downloader/
-└── downloads/
-    ├── videos/       # MP4 files
-    └── audios/       # MP3 files
+downloads/
+├── videos/       # MP4 files
+└── audios/       # MP3 files
 ```
 
 Files are named after the YouTube video title.
